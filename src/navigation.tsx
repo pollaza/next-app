@@ -36,6 +36,12 @@ function SimpleList() {
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItemLink>
+        <ListItemLink to="/results">
+          <ListItemIcon>
+            <DraftsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Results" />
+        </ListItemLink>
         <ListItemLink to="/about">
           <ListItemIcon>
             <DraftsIcon />
