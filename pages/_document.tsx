@@ -1,5 +1,6 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { ServerStyleSheet } from 'styled-components'
 import { ServerStyleSheets } from '@material-ui/core/styles';
 
 class MyDocument extends Document {
@@ -27,6 +28,7 @@ class MyDocument extends Document {
 
 MyDocument.getInitialProps = async (ctx) => {
   const sheets = new ServerStyleSheets();
+  const sheet = new ServerStyleSheet()
   const originalRenderPage = ctx.renderPage;
 
   ctx.renderPage = () =>
@@ -38,7 +40,7 @@ MyDocument.getInitialProps = async (ctx) => {
 
   return {
     ...initialProps,
-    styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
+    styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement(), sheet.getStyleElement()],
   };
 };
 

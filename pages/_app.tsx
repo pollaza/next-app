@@ -3,6 +3,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../src/theme";
 import Layout from "../src/layout";
+import GlobalStyles from "../components/GlobalStyles";
 
 function MyApp(props) {
   const { Component, pageProps } = props;
@@ -18,6 +19,7 @@ function MyApp(props) {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <GlobalStyles />
         <Layout>
           <Component {...pageProps} />
         </Layout>
