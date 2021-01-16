@@ -6,7 +6,7 @@ import nextCookie from "next-cookies";
 export const login = () => {
   if (isBrowser) {
     cookie.set('token', 'auth-ok', { expires: 100 });
-    window.location.assign('/');
+    Router.push('/');
   }
 };
 
