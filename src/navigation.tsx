@@ -11,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
     width: "100%",
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.main,
+    maxWidth: 160,
+    backgroundColor: theme.palette.background.default,
   },
 }));
 
@@ -41,6 +41,12 @@ function SimpleList() {
             <DraftsIcon />
           </ListItemIcon>
           <ListItemText primary="Results" />
+        </ListItemLink>
+        <ListItemLink to="/bets">
+          <ListItemIcon>
+            <DraftsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Bets" />
         </ListItemLink>
         <ListItemLink to="/about">
           <ListItemIcon>

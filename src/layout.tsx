@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
   },
   wrapper: {
     flexGrow: 1,
+    background: "#d1d1d1"
   },
 }));
 
