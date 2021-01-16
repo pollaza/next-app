@@ -34,13 +34,14 @@ const CssTextField = withStyles({
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: "#b3b3b3",
+        backgroundColor: "#fff",
         color: "#000",
         padding: "2em",
         marginBottom: "10px",
         marginLeft: "10px",
         marginRight: "10px",
-        borderRadius: "10px"
+        borderRadius: "10px",
+        boxShadow: "2px 2px 10px #ccc"
     },
     result: {
         textAlign: "center",
