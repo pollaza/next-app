@@ -8,13 +8,14 @@ const { formatToTimeZone } = require('date-fns-timezone')
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: "#000",
-        color: "#fff",
+        backgroundColor: "#a1a1a1",
+        color: "#000",
         padding: "2em",
         marginBottom: "10px",
         marginLeft: "10px",
         marginRight: "10px",
-        borderRadius: "10px"
+        borderRadius: "10px",
+        boxShadow: "2px 2px 10px #333"
     },
     result: {
         textAlign: "center",
@@ -37,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "center",
         fontSize: "1.0rem",
         fontWeight: "bold",
-        color: "#fff"
+        color: "#000"
     },
 }));
 
