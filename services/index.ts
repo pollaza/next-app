@@ -6,7 +6,7 @@ import nextCookie from "next-cookies";
 export const login = () => {
   if (isBrowser) {
     cookie.set('token', 'auth-ok', { expires: 100 });
-    window.location.assign('/results');
+    window.location.assign('/');
   }
 };
 
@@ -14,7 +14,7 @@ export const logout = () => {
   cookie.remove('token');
   // to support logging out from all windows
   window.localStorage.setItem('logout', String(Date.now()));
-  window.location.assign('/');
+  window.location.assign('/login');
 };
 
 export const authSync = async (ctx: any) => {
@@ -25,12 +25,12 @@ export const authSync = async (ctx: any) => {
    * means user is not logged in.
    */
   if (ctx.req && !token) {
-    ctx.res.writeHead(302, { Location: '/' });
+    ctx.res.writeHead(302, { Location: '/login' });
     ctx.res.end();
     return;
   }
   // We already checked for server. This should only happen on client.
-  if (!token) Router.push('/');
+  if (!token) Router.push('/login');
 
   return token;
 }
@@ -38,9 +38,15 @@ export const authSync = async (ctx: any) => {
 export const authRedirect = async (ctx: any) => {
   const { token } = nextCookie(ctx);
   // Redirect in the server if a token is present in the request
-  if (ctx.req && token) return ctx.res.redirect('/home');
+  if (ctx.req && token) {
+    if (ctx.req) {
+      ctx.res.writeHead(302, { Location: '/' });
+      ctx.res.end();
+      return;
+    }
+  }
   // We already checked for server. This should only happen on client.
-  if (token) Router.push('/home');
+  //if (token) Router.push('/home');
   return { token };
 }
 
