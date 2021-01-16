@@ -15,7 +15,6 @@ function Layout({ children }) {
 
   return (
     <div className={classes.root}>
-      <Navigation />
       <div className={classes.wrapper}>{children}</div>
     </div>
   );
