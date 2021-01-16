@@ -5,28 +5,28 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import {_useAxios, authRedirect, login as authLogin} from "../services";
 import useAxios from "axios-hooks";
-import {authRedirect, login as authLogin} from "../services";
 
 const Login = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string|boolean>(false);
-  const [{ data, loading }, executeLogin] = useAxios(
-    { url: 'https://pollazatechtalk.azurewebsites.net/account/login', method: 'POST' },
+  const [{ data }, executeMiddleware]= useAxios(
+    { url: '/api/login', method: 'POST' },
     { manual: true }
-  )
+    )
 
   const handleSubmit = (event:  React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(false);
-    executeLogin({data: {username, password}})
+    executeMiddleware({data: {username, password}})
   };
 
   useEffect(() => {
     if (data) {
       if (data.isSuccess) {
-        authLogin();
+        authLogin(data.cookie);
       } else {
         setError(data.message);
       }
