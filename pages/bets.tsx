@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Bet from "../src/components/bets/Bet";
+import AppLayout from "../components/AppLayout";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -37,19 +38,19 @@ const Bets = (props) => {
     }, [props])
 
     return (
-        <>
+        <AppLayout>
             <p>Bets</p>
             <Grid container>
                 {
                     matches.map(m => {
                         return (
-                            <Grid key={m.id} item xs={4}>
-                                <Bet  match={m} />
+                            <Grid key={m.id} item xs={12} sm={6} md={4} lg={3}>
+                                <Bet match={m} />
                             </Grid>)
                     })}
             </Grid>
+        </AppLayout>
 
-        </>
     )
 }
 

@@ -1,4 +1,7 @@
 import React, {useEffect, useState} from 'react'
+
+import AppLayout from "../components/AppLayout";
+
 import Match from "../src/components/results/Match"
 import Grid from "@material-ui/core/Grid"
 
@@ -34,7 +37,7 @@ const Results = (props) => {
         }
     }, [props])
 
-    return (<div>
+    return (<AppLayout>
         <Grid container>
             <Grid item xs={12} md={6}>
                 {phaseName}
@@ -47,7 +50,7 @@ const Results = (props) => {
                 Result List
             </Grid>
         </Grid>
-    </div>)
+    </AppLayout>)
 }
 
 Results.getInitialProps = async (ctx) => {
