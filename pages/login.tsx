@@ -20,13 +20,13 @@ const Login = () => {
   const handleSubmit = (event:  React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(false);
-    authLogin();
-    // executeLogin({data: {username, password}})
+    executeLogin({data: {username, password}})
   };
 
   useEffect(() => {
     if (data) {
       if (data.isSuccess) {
+        authLogin();
       } else {
         setError(data.message);
       }

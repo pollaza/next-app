@@ -11,8 +11,8 @@ const Profile = () => {
   )
 
   const handleLogout = () => {
-    logout();
     executeLogout();
+    logout();
   };
 
   return (
