@@ -6,7 +6,7 @@ import useAxios from "axios-hooks";
 
 const Profile = () => {
   const [{ data, loading }, executeLogout] = useAxios(
-    { url: 'https://pollazaapi.herokuapp.com/account/logout', method: 'POST' },
+    { url: 'https://pollazatechtalk.azurewebsites.net/account/logout', method: 'POST' },
     { manual: true }
   )
 
