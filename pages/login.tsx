@@ -12,8 +12,8 @@ const Login = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string|boolean>(false);
-  const [{ data }, executeMiddleware]= useAxios(
-    { url: '/api/login', method: 'POST' },
+  const [{ data }, executeMiddleware]= _useAxios(
+    { url: '/account/login', method: 'POST' },
     { manual: true }
     )
 
@@ -26,7 +26,8 @@ const Login = () => {
   useEffect(() => {
     if (data) {
       if (data.isSuccess) {
-        authLogin(data.cookie);
+        console.log(data);
+        authLogin(data.token);
       } else {
         setError(data.message);
       }
