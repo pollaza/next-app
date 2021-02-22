@@ -1,12 +1,11 @@
-import {authSync, logout} from "../services";
+import {_useAxios, authSync, logout} from "../services";
 import AppLayout from "../components/AppLayout";
 import Button from "@material-ui/core/Button";
 import React from "react";
-import useAxios from "axios-hooks";
 
 const Profile = () => {
-  const [{ data, loading }, executeLogout] = useAxios(
-    { url: 'https://pollazatechtalk.azurewebsites.net/account/logout', method: 'POST' },
+  const [{ data, loading }, executeLogout] = _useAxios(
+    { url: '/account/logout', method: 'POST' },
     { manual: true }
   )
 
