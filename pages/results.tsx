@@ -13,7 +13,7 @@ const Results = (props) => {
     const [phaseName, setPhaseName] = useState("");
     const [matches, setMatches] = useState([]);
     const [{ data, loading }, executeGetPhase] = useAxios(
-        { url: 'https://pollazatechtalk.azurewebsites.net/phase', method: 'GET' },
+        { url: 'https://pollazaapi.herokuapp.com/phase', method: 'GET' },
         { manual: true }
     )
 

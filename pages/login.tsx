@@ -13,7 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string|boolean>(false);
   const [{ data, loading }, executeLogin] = useAxios(
-    { url: 'https://pollazatechtalk.azurewebsites.net/account/login', method: 'POST' },
+    { url: 'https://pollazaapi.herokuapp.com/account/login', method: 'POST' },
     { manual: true }
   )
 
