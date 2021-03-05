@@ -2,7 +2,12 @@ import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const { formatToTimeZone } = require('date-fns-timezone')
 
@@ -40,9 +45,17 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
         color: "#000"
     },
+    heading: {
+        fontSize: theme.typography.pxToRem(15),
+        fontWeight: theme.typography.fontWeightRegular,
+    },
+    accordionDetails: {
+        display: 'block',
+        textAlign: 'center'
+    }
 }));
 
-const Match = ({ match }) => {
+const Match = ({ match, percent, bets }) => {
     const classes = useStyles();
 
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -53,6 +66,8 @@ const Match = ({ match }) => {
     const dateFormat = formatToTimeZone(match.date, formatDate, { timeZone: timeZone });
     const timeFormat = formatToTimeZone(match.date, formatTime, { timeZone: timeZone });
     const dayFormat = formatToTimeZone(match.date, formatDay, { timeZone: timeZone });
+
+    console.log(bets);
 
     return (<div className={classes.root}>
         <div className={classes.result}>{match.team1Score}:{match.team2Score}</div>
@@ -80,18 +95,42 @@ const Match = ({ match }) => {
                 <p>{match.team2.title}</p>
             </Grid>
         </Grid>
-        <Grid container>
+        {percent ? <Grid container>
             <Grid item xs={4} className={classes.bets}>
-                <CircularProgressWithLabel value={60}/>
+                <CircularProgressWithLabel value={percent.t1Percent} />
             </Grid>
             <Grid item xs={4} className={classes.bets}>
-                <CircularProgressWithLabel value={10}/>
+                <CircularProgressWithLabel value={percent.drawPercent} />
                 <p>Draw</p>
             </Grid>
             <Grid item xs={4} className={classes.bets}>
-                <CircularProgressWithLabel value={30}/>
+                <CircularProgressWithLabel value={percent.t2Percent} />
             </Grid>
-        </Grid>
+        </Grid> : <></>}
+        {match.closed ? <Accordion>
+            <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+            >
+                <Typography className={classes.heading}>Bets</Typography>
+            </AccordionSummary>
+            <AccordionDetails className={classes.accordionDetails}>
+                {bets?bets.map(bet => (<Grid container key={bet.id}>
+                    <Grid item xs={12}>
+                        <Typography variant="subtitle1">{bet.user}</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography>{bet.team1}</Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography>{bet.team2}</Typography>
+                    </Grid>
+                </Grid>)):<></>}
+
+            </AccordionDetails>
+        </Accordion> : <></>}
+
     </div>)
 }
 

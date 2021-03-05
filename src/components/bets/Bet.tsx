@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
@@ -29,12 +29,22 @@ const CssTextField = withStyles({
         '& .MuiInputBase-input': {
             color: "#000"
         }
-    },
+    }
 })(TextField);
 
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: "#fff",
+        color: "#000",
+        padding: "2em",
+        marginBottom: "10px",
+        marginLeft: "10px",
+        marginRight: "10px",
+        borderRadius: "10px",
+        boxShadow: "2px 2px 10px #ccc"
+    },
+    rootClosed: {
+        backgroundColor: "#ddd",
         color: "#000",
         padding: "2em",
         marginBottom: "10px",
@@ -68,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Bet = ({ match }) => {
+const Bet = ({ match, team1, team2, index, changeTeam1, changeTeam2 }) => {
     const classes = useStyles();
 
     const [team1Score, setTeam1Score] = useState("0");
@@ -82,6 +92,12 @@ const Bet = ({ match }) => {
     const dateFormat = formatToTimeZone(match.date, formatDate, { timeZone: timeZone });
     const timeFormat = formatToTimeZone(match.date, formatTime, { timeZone: timeZone });
     const dayFormat = formatToTimeZone(match.date, formatDay, { timeZone: timeZone });
+
+    useEffect(() => {
+        setTeam1Score(team1);
+        setTeam2Score(team2);
+        
+    }, [team1, team2])
 
     const convertToInt = (val) => {
         let inputValue = 0;
@@ -97,26 +113,26 @@ const Bet = ({ match }) => {
     }
 
     const updateTeam1 = (ev) => {
-        console.log(ev.target.value);
-        
         const parsed = convertToInt(ev.target.value);
         setTeam1Score(parsed+"");
+        changeTeam1(index, parsed);
     }
 
     const updateTeam2 = (ev) => {
-        console.log(ev.target.value);
         const parsed = convertToInt(ev.target.value);
         setTeam2Score(parsed+"");
+        changeTeam2(index, parsed);
     }
 
-    return (<div className={classes.root}>
+    return (<div className={!match.closed?classes.root:classes.rootClosed}>
         <Grid container className={classes.result}>
             <Grid item xs={3}>
                 <CssTextField
                     label=""
                     variant="outlined"
-                    value={team1Score}
+                    value={match.closed?team1:team1Score}
                     onChange={updateTeam1}
+                    disabled={match.closed}
                 />
             </Grid>
             <Grid item xs={6}>
@@ -126,8 +142,9 @@ const Bet = ({ match }) => {
                 <CssTextField
                     label=""
                     variant="outlined"
-                    value={team2Score}
+                    value={match.closed?team2:team2Score}
                     onChange={updateTeam2}
+                    disabled={match.closed}
                 />
             </Grid>
         </Grid>
