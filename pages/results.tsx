@@ -7,27 +7,30 @@ import Grid from "@material-ui/core/Grid"
 import Typography from "@material-ui/core/Typography";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { _useAxios } from "../services";
+import { _useAxios, authSync } from "../services";
+import axios from 'axios';
 import Score from "../src/components/scoreBoard/Score";
 
 const Results = (props) => {
 
+    console.log(props);
+
     const [phaseName, setPhaseName] = useState("");
     const [percents, setPercents] = useState({});
     const [currentBets, setCurrentBets] = useState({});
-    const [{ data, loading }, executeGetPhase] = _useAxios(
-        { url: '/phase/results', method: 'GET' },
-        { manual: true }
-    )
+    // const [{ data, loading }, executeGetPhase] = _useAxios(
+    //     { url: '/phase/results', method: 'GET' },
+    //     { manual: true }
+    // )
 
-    const [{ data:scoreBoardData, loading:scoreBoardLoading }, executeGetScoreBoard] = _useAxios(
-        { url: '/phase/ScoreBoard', method: 'GET' },
-        { manual: true }
-    )
+    // const [{ data:scoreBoardData, loading:scoreBoardLoading }, executeGetScoreBoard] = _useAxios(
+    //     { url: '/phase/ScoreBoard', method: 'GET' },
+    //     { manual: true }
+    // )
 
     useEffect(() => {
-        executeGetPhase();
-        executeGetScoreBoard();
+        //executeGetPhase();
+        //executeGetScoreBoard();
         return () => {
 
         }
@@ -35,10 +38,10 @@ const Results = (props) => {
 
 
     useEffect(() => {
-        if (data) {
-            const { phase } = data;
-            const { matches } = data;
-            const { userScores } = data;
+        if (props.resultsData) {
+            const { phase } = props.resultsData;
+            const { matches } = props.resultsData;
+            const { userScores } = props.resultsData;
 
             let matchPercents = {};
             let matchBets = {};
@@ -92,25 +95,25 @@ const Results = (props) => {
         return () => {
             //cleanup
         }
-    }, [data]);
+    }, [props.resultsData]);
 
     return (<AppLayout>
-        {!loading && data ? <Grid container>
+        {props.resultsData ? <Grid container>
             <Grid item xs={12} md={6}>
                 <Typography variant="h4">
                     {phaseName}
                 </Typography>
                 <div>
-                    {data.matches.map(m => <Match 
+                    {props.resultsData.matches.map(m => <Match 
                     bets={currentBets[m.sys.id]}
                     key={m.sys.id} match={m} percent={percents[m.sys.id]}></Match>)}
                 </div>
                 { }
             </Grid>
             <Grid item xs={12} md={6}>
-                {scoreBoardLoading?<p>loading...</p>:<List>
+                {!props.scoreBoardData?<p>loading...</p>:<List>
                     <ListItem><Typography variant="h5">Leader Board</Typography></ListItem>
-                    {scoreBoardData.scores.map(score => <Score 
+                    {props.scoreBoardData.scores.map(score => <Score 
                         key={score.user.sys.id}
                         user={score.user} 
                         score={score.score}
@@ -122,6 +125,23 @@ const Results = (props) => {
         </Grid> :  <div>Loading...</div>}
 
     </AppLayout>)
+}
+
+Results.getInitialProps = async (ctx) => {
+    const authResponse = await authSync(ctx);
+    const config = {
+        headers: {
+          'Authorization': authResponse.Token
+        }
+      };
+    
+    const responses = await Promise.all([
+        axios.get('https://pollazaapi.herokuapp.com/phase/results',config), 
+        axios.get('https://pollazaapi.herokuapp.com/phase/ScoreBoard',config)]);
+
+    //console.log(authResponse.Token, responses);
+
+    return { resultsData : responses[0].data, scoreBoardData: responses[1].data }
 }
 
 export default Results
