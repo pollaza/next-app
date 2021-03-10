@@ -8,7 +8,7 @@ import { makeUseAxios } from 'axios-hooks'
 export const login = (_cookie) => {
     if (isBrowser) {
         cookie.set('Token', `Bearer ${_cookie}`, { expires: 100 });
-        window.location.assign('/');
+        window.location.assign('/results');
     }
 };
 

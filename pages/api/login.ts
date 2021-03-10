@@ -8,7 +8,6 @@ export default async function handler(req, res) {
     const cookie = response.headers.raw()['set-cookie'][0].split(';')[0]
     const data = await response.json();
     data.cookie = cookie;
-    console.log(data);
     res.json(data)
   } catch (e) {
 

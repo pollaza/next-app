@@ -67,8 +67,6 @@ const Match = ({ match, percent, bets }) => {
     const timeFormat = formatToTimeZone(match.date, formatTime, { timeZone: timeZone });
     const dayFormat = formatToTimeZone(match.date, formatDay, { timeZone: timeZone });
 
-    console.log(bets);
-
     return (<div className={classes.root}>
         <div className={classes.result}>{match.team1Score}:{match.team2Score}</div>
         <Grid container>

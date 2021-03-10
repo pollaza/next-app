@@ -13,8 +13,6 @@ import Score from "../src/components/scoreBoard/Score";
 
 const Results = (props) => {
 
-    console.log(props);
-
     const [phaseName, setPhaseName] = useState("");
     const [percents, setPercents] = useState({});
     const [currentBets, setCurrentBets] = useState({});

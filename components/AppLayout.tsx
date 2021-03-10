@@ -10,7 +10,7 @@ const AppLayout: React.FC = ({children}) => (
     <AppBar position="static" color="transparent">
       <BaseContainer>
         <StyledToolbar>
-          <Link href="/" passHref>
+          <Link href="/results" passHref>
             <img src="/logo-horizontal.svg"/>
           </Link>
           <div>

@@ -25,7 +25,6 @@ const Login = () => {
   useEffect(() => {
     if (data) {
       if (data.isSuccess) {
-        console.log(data);
         authLogin(data.token);
       } else {
         setError(data.message);
